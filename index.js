@@ -28,16 +28,16 @@ const pattern = argv.pattern || '**/*';
 const opts = {};
 
 if (argv.cwd){
-    opts.cwd = argv.cwd;
+    opts.cwd = argv.cwd || process.cwd();
 }
 
 if (argv.root){
-    opts.cwd = argv.root;
+    opts.root = argv.root || process.cwd();
 }
 
 
-glob(pattern, function(err, files){
-    const body = files.filter((f)=>fs.lstatSync(f).isFile()).map((f)=>`<a href=${f}>${f}</a>`).join('<br/>');
+glob(pattern, opts, function(err, files){
+    const body = files.map((f)=>({relative: path.join(opts.root, f), original: f})).filter((f)=>fs.lstatSync(f.relative).isFile()).map((f)=>`<a href=${f.original}>${f.original}</a>`).join('<br/>');
     const filecontent = `<html><body>${body}</body></html>`;
     if (argv.console) {
         console.log(filecontent);
