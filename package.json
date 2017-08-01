@@ -1,0 +1,12 @@
+{
+  "name": "generate-index-html",
+  "version": "0.0.0",
+  "bin": {
+    "generate-index-html": "index.js"
+  },
+  "dependencies": {
+    "fs-extra": "^4.0.1",
+    "glob": "^7.1.2",
+    "minimist": "^1.2.0"
+  }
+}
